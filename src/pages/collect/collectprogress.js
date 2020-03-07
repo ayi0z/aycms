@@ -18,12 +18,14 @@ class CollectProgress extends Component {
     gpageidx: 0,
     grecordcount: 0,
     gprogress: [],
-    gprogresspercent: 0
+    gprogresspercent: 0,
+    finishedCount: 0
   }
 
-  sse = e => {
-    const { collectId, collectType } = this.props
-    if (!collectId || !collectType) return
+  collectHandler = async (collects) => {
+    if (!collects || !collects.length) return
+    collects = [...collects]
+
     this.setState({
       loading: true,
       btnloading: true,
@@ -31,16 +33,23 @@ class CollectProgress extends Component {
       gpageidx: 0,
       grecordcount: 0,
       gprogress: [],
-      gprogresspercent: 0
+      gprogresspercent: 0,
+      finishedCount: this.state.finishedCount + 1
     })
 
+    this.sse(collects, this.props.collectType)
+  }
+
+  sse = async (collects, collectType) => {
+    const collect = collects.shift()
     if ('EventSource' in window) {
-      const streamurl = `${api.ayserverapi}${api.progress}/${collectId}/${collectType}`
-      var source = new EventSource(streamurl, {
+      var source = new EventSource(`${api.ayserverapi}${api.progress}/${collect.id}/${collectType}`, {
         headers: { Authorization: `Bearer ${authRead()}` }
       })
       source.onopen = e => {
-        this.setState({ loading: true, btnloading: true })
+        this.setState({
+          loading: true, btnloading: true, collectName: collect.name
+        })
       }
       source.onerror = e => {
         source.close()
@@ -48,7 +57,8 @@ class CollectProgress extends Component {
           title: '数据采集发生错误',
           content: e.message,
         })
-        this.setState({ loading: false, btnloading: false })
+        this.setState({ loading: false, btnloading: false, finishedCount: this.state.finishedCount - 1 })
+        this.collectHandler(collects)
       }
       source.addEventListener('taskinfo', e => {
         if (e.data) {
@@ -77,21 +87,24 @@ class CollectProgress extends Component {
       source.addEventListener('finish', e => {
         source.close()
         this.setState({ btnloading: false, loading: false })
-        request.put(`${api.collect_last}/${collectId}`)
+        request.put(`${api.collect_last}/${collect.id}`)
+        this.collectHandler(collects)
       })
     }
   }
 
   render() {
-    const { loading, btnloading, gpagecount, gpageidx, gprogress, gprogresspercent, grecordcount } = this.state
-    const { collectId, collectType, collectName, onClose } = this.props
+    const { loading, btnloading, gpagecount, gpageidx,
+      gprogress, gprogresspercent, grecordcount, collectName, finishedCount } = this.state
+    const { onClose, collects } = this.props
     return (
       <div>
         <PageHeader
           ghost={false}
-          subTitle={`正在采集: ${collectName}`}
+          subTitle={`正在采集: ${collectName || ''} ${finishedCount || 0}/${collects && collects.length || 0}`}
           extra={<Button.Group>
-            <Button disabled={!collectId && !collectType} loading={btnloading} type="primary" icon={<DeploymentUnitOutlined />} onClick={this.sse}>开始采集</Button>
+            <Button loading={btnloading} type="primary"
+              icon={<DeploymentUnitOutlined />} onClick={() => this.collectHandler(collects)}>开始采集</Button>
             <Button disabled={btnloading} type="danger" icon={<CloseOutlined />} onClick={onClose}></Button>
           </Button.Group>
           }

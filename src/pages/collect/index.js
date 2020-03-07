@@ -41,9 +41,8 @@ class Collect extends PureComponent {
     drawerVisible: false,
     modalVisible: false,
     selectedRowKeys: [],
-    collectApiID: undefined,
     collectType: undefined,
-    collectName: ''
+    collects: []
   }
 
   componentDidMount() {
@@ -82,13 +81,20 @@ class Collect extends PureComponent {
     this.setState({ modalVisible: false })
   }
   handleCollectMenuClick(e, record) {
-    this.setState({ modalVisible: true, collectApiID: record.id, collectType: e.key, collectName: record.name })
+    record = record
+      ? [{ id: record.id, name: record.name }]
+      : this.props.collect.dataList
+        .filter(c => this.state.selectedRowKeys.includes(c.id))
+        .map(c => ({ id: c.id, name: c.name }))
+    this.onCollect(e.key, record)
+  }
+  onCollect = (type, record) => {
+    this.setState({ modalVisible: true, collects: record, collectType: type })
   }
 
   render() {
-    const { drawerVisible, selectedRowKeys, modalVisible, collectApiID, collectType, collectName } = this.state
-    const { collect, loading } = this.props
-    const { dataList, collectId } = collect
+    const { drawerVisible, selectedRowKeys, modalVisible, collects, collectType } = this.state
+    const { collect: { dataList, collectId }, loading } = this.props
 
     const columns = [
       {
@@ -154,6 +160,10 @@ class Collect extends PureComponent {
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button.Group>
               <Button type='primary' icon={<PlusOutlined />} onClick={() => this.handleSwitchDrawerVisible()}>添加</Button>
+              <Dropdown
+                overlay={() => (<CollectDropMenu onMenuClick={e => this.handleCollectMenuClick(e)}></CollectDropMenu>)}>
+                <Button type='primary' icon={<UnorderedListOutlined />}>采集</Button>
+              </Dropdown>
               <Popconfirm title="确认删除?" okText="是" cancelText="否" placement="leftTop" onConfirm={this.handleDeleteSelectedRows}>
                 <Button type='danger' loading={loading.effects['collect/delete']} icon={<DeleteOutlined />}>删除</Button>
               </Popconfirm>
@@ -169,8 +179,8 @@ class Collect extends PureComponent {
           dataSource={dataList}
           style={{ height: '450px' }}
           size="small"
-          // scroll={{ x: 1400 }} 
-          />
+        // scroll={{ x: 1400 }} 
+        />
         <Drawer
           width={720}
           onClose={() => this.handleSwitchDrawerVisible()}
@@ -191,7 +201,7 @@ class Collect extends PureComponent {
           footer={null}
           destroyOnClose={true}
         >
-          <CollectProgress collectId={collectApiID} collectType={collectType} collectName={collectName} onClose={this.handleCloseModal}></CollectProgress>
+          <CollectProgress collects={collects} collectType={collectType} onClose={this.handleCloseModal}></CollectProgress>
         </Modal>
       </div>
     );
