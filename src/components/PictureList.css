@@ -1,0 +1,87 @@
+
+.normal {
+    background: #79AEF2;
+  }
+  
+  
+  /* 外壳样式 */
+  .pic_list_wrapper {
+    position: relative;
+    background: #DEEDCC;
+    overflow: hidden;
+    /* height: 500px; */
+  }
+  
+  .pic_list {
+    box-shadow: 0 10px 40px #C7D7B5;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 6px;
+  }
+  /* 图片 */
+  .pic_list_image_wrapper {
+    position: relative;
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  
+  .pic_list_image_wrapper li {
+    position: absolute;
+    z-index: 0;
+  }
+
+  .pic_list_image_wrapper li a {
+    z-index: 1;
+    display: inline-block;
+    position: absolute;
+  }
+  
+  .pic_list_image_wrapper li a, .pic_list_image_wrapper li a img {
+    display: block;
+    border-radius: 3px;
+  }
+
+  .pic_list_image_wrapper li a img:hover{
+    box-shadow: 2px 2px 4px #3f5443;
+  }
+  
+  .pic_list_text_wrapper {
+    background: #fff;
+    padding: 0 5px;
+    height: 100%;
+    vertical-align: top;
+    display: inline-block;
+    position: absolute;
+  }
+  
+  .pic_list_text_wrapper h1 {
+    font-size: 18px;
+    margin: 5px auto;
+  }
+  
+  .pic_list_text_wrapper i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .pic_list_text_wrapper em {
+    height: 2px;
+    width: 60px;
+    background: #FA1F4E;
+    border-radius: 2px;
+    display: block;
+  }
+  
+  .pic_list_text_wrapper p {
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 16px;
+  }

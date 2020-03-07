@@ -1,0 +1,22 @@
+
+.normal {
+  width: 100%;
+  height: 100vh;
+  background: url(../../assets/colorful-keys.webp) no-repeat;
+  background-size: cover;
+  background-attachment:fixed;
+}
+
+.login_form {
+  width: 300px;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.login_form_forgot {
+  float: right;
+}
+.login_form_button_login{
+  margin-right: 5px;
+}

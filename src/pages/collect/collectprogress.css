@@ -1,0 +1,26 @@
+
+.normal {
+  
+}
+
+.progress_name {
+  margin-right: 3px;
+  font-size: small;
+}
+
+.progress_upmode {
+  margin-right: 3px;
+  color: blue;
+  font-size: small;
+}
+
+.progress_result_succ {
+  margin-right: 3px;
+  color: green;
+  font-size: small;
+}
+.progress_result_fail {
+  margin-right: 3px;
+  color: crimson;
+  font-size: small;
+}

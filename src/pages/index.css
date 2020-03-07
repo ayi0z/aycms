@@ -1,0 +1,12 @@
+
+.normal {
+  font-family: Georgia, sans-serif;
+  margin-top: 4em;
+  text-align: center;
+}
+
+.welcome {
+  height: 512px;
+  background: url(../assets/yay.webp) no-repeat center 0;
+  background-size: 512px 512px;
+}

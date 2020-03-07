@@ -1,0 +1,17 @@
+.dlContainer{
+    overflow-y: auto;
+    height: 80px;
+    margin: 0px 5px 5px 1px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 2px #568cc7;
+    border-bottom-right-radius: 3px;
+}
+.dl{
+    display: inline-block;
+    padding: 2px 3px;
+    border-radius: 3px;
+}
+.dl:hover{
+    cursor: pointer;
+    background-color: rgb(183, 208, 255);
+}

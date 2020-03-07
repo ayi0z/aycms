@@ -1,0 +1,201 @@
+/**
+ * tabtitle: 视频
+ * icon: VideoCameraOutlined
+ */
+import { connect } from 'dva'
+import React, { PureComponent } from 'react';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  LinkOutlined,
+  PlusOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
+import {
+  Divider, Drawer, Button,
+  Table, Popconfirm, Dropdown,
+  Row, Col, Modal, Tabs
+} from 'antd';
+import styles from './index.css';
+import ApiEdit from './apiedit'
+import ClassMap from './classmap'
+import CollectProgress from './collectprogress'
+import CollectDropMenu from '@/components/CollectDropMenu'
+
+const drawerChildrenRender = (drawerVisible, collectId) => {
+  if (drawerVisible) {
+    return (<Tabs defaultActiveKey="1">
+      <Tabs.TabPane tab="资源站" key="1">
+        <ApiEdit></ApiEdit>
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="视频类型映射" key="2" disabled={!collectId}>
+        <ClassMap></ClassMap>
+      </Tabs.TabPane>
+    </Tabs>)
+  }
+}
+
+@connect(({ collect, loading }) => ({ collect, loading }))
+class Collect extends PureComponent {
+  state = {
+    drawerVisible: false,
+    modalVisible: false,
+    selectedRowKeys: [],
+    collectApiID: undefined,
+    collectType: undefined,
+    collectName: ''
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch({ type: 'collect/query' })
+  }
+
+  handleSwitchDrawerVisible = async e => {
+    const { drawerVisible } = this.state
+    const { dispatch } = this.props
+    await dispatch({ type: 'collect/setApiId', payload: { collectId: e || 0 } })
+    this.setState({ drawerVisible: !drawerVisible })
+  }
+
+  handleDrawerVisableChange = e => {
+    if (!e) {
+      const { dispatch } = this.props
+      dispatch({ type: 'collect/clearApi' })
+    }
+  }
+
+  handleTableRowSelectChange = selectedRowKeys => {
+    this.setState({ selectedRowKeys })
+  }
+  handleDeleteSelectedRows = e => {
+    this.onDeleteCollect(this.state.selectedRowKeys)
+  }
+  onDeleteCollect = ids => {
+    if (ids && ids.length > 0) {
+      const { dispatch } = this.props
+      dispatch({ type: 'collect/delete', payload: ids })
+    }
+  }
+
+  handleCloseModal = e => {
+    this.setState({ modalVisible: false })
+  }
+  handleCollectMenuClick(e, record) {
+    this.setState({ modalVisible: true, collectApiID: record.id, collectType: e.key, collectName: record.name })
+  }
+
+  render() {
+    const { drawerVisible, selectedRowKeys, modalVisible, collectApiID, collectType, collectName } = this.state
+    const { collect, loading } = this.props
+    const { dataList, collectId } = collect
+
+    const columns = [
+      {
+        title: 'No',
+        width: 60,
+        dataIndex: 'id',
+        key: 'id',
+        // fixed: 'left'
+      },
+      {
+        title: 'Name',
+        width: 120,
+        dataIndex: 'name',
+        key: 'name',
+        // fixed: 'left',
+        render: (text, record) => (
+          record.weburl
+            ? <a href={record.weburl} target='blank'>{text}<LinkOutlined /></a>
+            : text
+        )
+      },
+      {
+        title: 'Url',
+        dataIndex: 'apiurl',
+        key: 'apiurl',
+        render: (text, record) => {
+          let { last } = record
+          if (last) {
+            last = new Date(last)
+            return (<div>{text} <sub style={{ color: '#d28989' }}>{last.toLocaleDateString()} {last.toLocaleTimeString()}</sub></div>)
+          }
+          return text
+        }
+      },
+      {
+        title: 'Action',
+        key: 'operation',
+        // fixed: 'right',
+        width: 120,
+        render: (text, record) => (
+          <div>
+            <Dropdown
+              overlay={() => (<CollectDropMenu onMenuClick={e => this.handleCollectMenuClick(e, record)}></CollectDropMenu>)}>
+              <Button size="small" style={{ border: 'none', boxShadow: 'none' }}>
+                <UnorderedListOutlined style={{ fontSize: '10px' }} />
+              </Button>
+            </Dropdown>
+            <Divider type="vertical" />
+            <Button.Group>
+              <Button type="primary" size="small" icon={<EditOutlined />} onClick={() => this.handleSwitchDrawerVisible(record.id)} />
+              <Popconfirm title="确认删除?" okText="是" cancelText="否" placement="leftTop" onConfirm={() => this.onDeleteCollect([record.id])}>
+                <Button loading={loading.effects['collect/delete']} type="danger" size="small" icon={<DeleteOutlined />} />
+              </Popconfirm>
+            </Button.Group>
+          </div>
+        ),
+      },
+    ];
+
+    return (
+      <div className={styles.normal}>
+        <Row>
+          <Col span={24} style={{ textAlign: 'right' }}>
+            <Button.Group>
+              <Button type='primary' icon={<PlusOutlined />} onClick={() => this.handleSwitchDrawerVisible()}>添加</Button>
+              <Popconfirm title="确认删除?" okText="是" cancelText="否" placement="leftTop" onConfirm={this.handleDeleteSelectedRows}>
+                <Button type='danger' loading={loading.effects['collect/delete']} icon={<DeleteOutlined />}>删除</Button>
+              </Popconfirm>
+            </Button.Group>
+          </Col>
+        </Row>
+        <Table
+          rowKey='id'
+          rowSelection={{ selectedRowKeys, onChange: this.handleTableRowSelectChange }}
+          loading={loading.effects['collect/query']}
+          pagination={{ pageSize: 10 }}
+          columns={columns}
+          dataSource={dataList}
+          style={{ height: '450px' }}
+          size="small"
+          // scroll={{ x: 1400 }} 
+          />
+        <Drawer
+          width={720}
+          onClose={() => this.handleSwitchDrawerVisible()}
+          visible={drawerVisible}
+          afterVisibleChange={this.handleDrawerVisableChange}
+          placement="right"
+          height="90vh"
+          getContainer={false}
+          destroyOnClose={true}
+          style={{ position: 'absolute' }}
+        >
+          {drawerChildrenRender(drawerVisible, collectId)}
+        </Drawer>
+        <Modal
+          centered
+          visible={modalVisible}
+          closable={false}
+          footer={null}
+          destroyOnClose={true}
+        >
+          <CollectProgress collectId={collectApiID} collectType={collectType} collectName={collectName} onClose={this.handleCloseModal}></CollectProgress>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+export default Collect

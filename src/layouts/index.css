@@ -1,0 +1,23 @@
+
+.normal {
+  font-family: Georgia, sans-serif;
+  text-align: center;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  margin: 16px 28px 16px 0;
+  float: left;
+  line-height: 31px;
+  font-weight: bolder;
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.icon {
+  font-size: 30px;
+  line-height: 31px;
+  vertical-align: middle;
+}
