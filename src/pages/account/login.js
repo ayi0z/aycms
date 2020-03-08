@@ -17,7 +17,7 @@ class LoginForm extends Component {
   handleSubmit = values => {
     authClear()
     this.setState({ loading: true })
-    fetch(`${api.ayserverapi}/auth`, {
+    fetch(`${api.API_DOMIN}/auth`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'

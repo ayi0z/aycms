@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@ant-design/compatible": "0.0.1-rc.1",
-    "antd": "^4.0.0",
+    "@ant-design/icons": "4.0.0",
+    "antd": "^4.0.1",
     "dplayer": "^1.25.0",
     "dva": "^2.6.0-beta.6",
     "eventsource": "^1.0.7",

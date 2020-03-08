@@ -13,7 +13,7 @@ export const dva = {
 export function render(oldRender) {
     const auto_token = authRead()
     if (auto_token) {
-        fetch(`${api.ayserverapi}/authchk`, {
+        fetch(`${api.API_DOMIN}/authchk`, {
             method: 'GET',
             headers: new Headers({ Authorization: `Bearer ${auto_token}` })
         }).then(res => res.json())

@@ -58,24 +58,26 @@ class VideosList extends Component {
   handleCloseDrawer = (e) => {
     this.setState({ drawerVisable: false })
   }
-  doSearch = () => {
+  doSearch = async () => {
     const { dispatch } = this.props
-    dispatch({ type: 'video/clearList' })
+    await dispatch({ type: 'video/clearList' })
 
-    const { pageSize, pageIndex,
-      searchName, searchCollect,
-      searchType, searchYear } = this.state
-    dispatch({
-      type: 'video/queryPage',
-      payload: {
-        pageSize,
-        pageIndex,
-        searchName,
-        searchCollect,
-        searchType,
-        searchYear
-      }
-    })
+    setTimeout(() => {
+      const { pageSize, pageIndex,
+        searchName, searchCollect,
+        searchType, searchYear } = this.state
+      dispatch({
+        type: 'video/queryPage',
+        payload: {
+          pageSize,
+          pageIndex,
+          searchName,
+          searchCollect,
+          searchType,
+          searchYear
+        }
+      })
+    }, 1000)
   }
   handleSearchSubmit = values => {
     values = values || {}

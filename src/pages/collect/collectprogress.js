@@ -43,7 +43,7 @@ class CollectProgress extends Component {
   sse = async (collects, collectType) => {
     const collect = collects.shift()
     if ('EventSource' in window) {
-      var source = new EventSource(`${api.ayserverapi}${api.progress}/${collect.id}/${collectType}`, {
+      var source = new EventSource(`${api.API_DOMIN}${api.progress}/${collect.id}/${collectType}`, {
         headers: { Authorization: `Bearer ${authRead()}` }
       })
       source.onopen = e => {

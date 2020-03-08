@@ -4,7 +4,7 @@ import codeHandler from '@/util/code-handler'
 import api from './api'
 
 const request = extend({
-    prefix: api.ayserverapi,
+    prefix: api.API_DOMIN,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },

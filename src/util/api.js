@@ -11,5 +11,6 @@ export default {
     videocollect: '/video/collect',
     banner: '/banner',
 
-    ayserverapi: 'http://api.ayioz.co',
+    API_DOMIN: 'http://api.ayioz.com',
+    Img_DOMIM: 'http://img.ayioz.com'
 }

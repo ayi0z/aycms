@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { CloseOutlined } from '@ant-design/icons';
 import QueueAnim from 'rc-queue-anim'
 import TweenOne, { TweenOneGroup } from 'rc-tween-one'
 import styles from './PictureList.css'
 import PropTypes from 'prop-types'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import api from '@/util/api'
 
 const PictureList = (props) => {
+
+    const setImgSrc = useCallback(node => {
+        node.target.src = `${api.Img_DOMIM}/aycms-black.png`
+        node.target.removeEventListener('error', setImgSrc)
+    })
+
+    const imgRef = useCallback(node => {
+        if (node) {
+            node.addEventListener('error', setImgSrc)
+        }
+    }, [setImgSrc])
+
     const { imgField, pictures, imgWidth, imgHeight, imgXPadding, imgYPadding, renderDec } = props
-    const [imgColumn, setImgColumn] = useState(6)
     const [picOpen, setPicOpen] = useState({})
 
     const imgBoxWidth = imgWidth + imgXPadding * 2
@@ -35,12 +47,12 @@ const PictureList = (props) => {
         setPicOpen(tPicOpen)
     }
 
-    const getDelay = (e) => {
+    const getDelay = (e, imgColumn) => {
         const i = e.index + pictures.length % imgColumn
         return (i % imgColumn) * 100 + Math.floor(i / imgColumn) * 100 + 200
     }
 
-    const picLiRender = () => {
+    const picLiRender = (imgColumn) => {
         return pictures.map((item, i) => {
             const isEnter = typeof picOpen[i] === 'boolean'  // 面板展开
             const isOpen = picOpen[i]    // 面板展开
@@ -105,7 +117,10 @@ const PictureList = (props) => {
                             height: imgHeight
                         }}
                     >
-                        <img src={item[imgField]} width="100%" height="100%" alt="piclist" οnerrοr="()=>{this.src='default.jpg'; this.onerror=null;}" />
+                        <img ref={imgRef} src={item[imgField]}
+                            width="100%" height="100%" alt="piclist"
+                            style={{ background: `url(${api.Img_DOMIM}/aycms-gray.png) center center / 100% no-repeat` }}
+                        />
                     </TweenOne>
                     <TweenOneGroup
                         enter={[
@@ -140,19 +155,18 @@ const PictureList = (props) => {
                 ({ width, height }) => {
                     if (width) {
                         const imgColumn = Math.floor(width / imgBoxWidth)
-                        setImgColumn(imgColumn)
                         const ulWidth = imgColumn * imgBoxWidth
                         return (
                             <div className={styles.pic_list} style={{ height, width }}>
                                 <QueueAnim
-                                    delay={getDelay}
+                                    delay={(e) => getDelay(e, imgColumn)}
                                     component="ul"
                                     className={styles.pic_list_image_wrapper}
                                     interval={0}
                                     type="bottom"
                                     style={{ width: ulWidth }}
                                 >
-                                    {picLiRender()}
+                                    {picLiRender(imgColumn)}
                                 </QueueAnim>
 
                             </div>
