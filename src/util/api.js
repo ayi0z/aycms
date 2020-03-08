@@ -10,6 +10,7 @@ export default {
     videodl: '/video/dl',
     videocollect: '/video/collect',
     banner: '/banner',
+    fixdl: '/fix/dl',
 
     API_DOMIN: 'http://api.ayioz.com',
     Img_DOMIM: 'http://img.ayioz.com'

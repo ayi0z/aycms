@@ -19,6 +19,7 @@ import {
 import styles from './index.css';
 import ApiEdit from './apiedit'
 import ClassMap from './classmap'
+import DlFix from './dlfix'
 import CollectProgress from './collectprogress'
 import CollectDropMenu from '@/components/CollectDropMenu'
 
@@ -30,6 +31,9 @@ const drawerChildrenRender = (drawerVisible, collectId) => {
       </Tabs.TabPane>
       <Tabs.TabPane tab="视频类型映射" key="2" disabled={!collectId}>
         <ClassMap></ClassMap>
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="播放地址替换" key="3" disabled={!collectId}>
+        <DlFix collectId={collectId}></DlFix>
       </Tabs.TabPane>
     </Tabs>)
   }
@@ -133,7 +137,7 @@ class Collect extends PureComponent {
         title: 'Action',
         key: 'operation',
         // fixed: 'right',
-        width: 120,
+        width: 140,
         render: (text, record) => (
           <div>
             <Dropdown
