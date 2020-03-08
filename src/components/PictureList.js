@@ -7,18 +7,17 @@ import PropTypes from 'prop-types'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import api from '@/util/api'
 
+const setImgSrc = node => {
+    node.target.src = `${api.Img_DOMIM}/aycms-black.png`
+    node.target.removeEventListener('error', setImgSrc)
+}
 const PictureList = (props) => {
-
-    const setImgSrc = useCallback(node => {
-        node.target.src = `${api.Img_DOMIM}/aycms-black.png`
-        node.target.removeEventListener('error', setImgSrc)
-    })
 
     const imgRef = useCallback(node => {
         if (node) {
             node.addEventListener('error', setImgSrc)
         }
-    }, [setImgSrc])
+    }, [])
 
     const { imgField, pictures, imgWidth, imgHeight, imgXPadding, imgYPadding, renderDec } = props
     const [picOpen, setPicOpen] = useState({})

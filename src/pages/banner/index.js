@@ -58,7 +58,8 @@ export default function () {
         const { code, data } = res
         if (code === 200 && data) {
           fetchBannerList()
-          formRef.current.setFieldsValue({ id: 0, alt: '', src: '', href: '', sort: 0 })
+          formRef.current.resetFields()
+          // formRef.current.setFieldsValue({ id: 0, alt: '', src: '', href: '', sort: 0 })
         }
       })
     }
@@ -67,7 +68,7 @@ export default function () {
   return (
     <div className={styles.normal}>
       <div style={{ textAlign: 'center', padding: 10 }}>
-        <Form onFinish={formFinish} ref={formRef} initialValues={{ sort: 0 }}>
+        <Form onFinish={formFinish} onReset={()=>{formRef.current.resetFields()}} ref={formRef} initialValues={{ sort: 0 }}>
           <Input.Group compact>
             < Form.Item name="id" noStyle >
               <Input style={{ display: 'none' }} />
@@ -86,6 +87,7 @@ export default function () {
             </Form.Item>
             <Form.Item noStyle>
               <Button type="primary" htmlType="submit">保存</Button>
+              <Button type="primary" htmlType="reset">Clear</Button>
             </Form.Item>
           </Input.Group>
         </Form>
@@ -117,18 +119,19 @@ const columns = (change, confirm) => ([
   {
     title: 'sort',
     dataIndex: 'sort',
-    key: 'sort'
-  },
-  {
-    title: 'alt',
-    width: 120,
-    dataIndex: 'alt',
-    key: 'alt'
+    key: 'sort',
+    width: 50,
   },
   {
     title: 'href',
     dataIndex: 'href',
-    key: 'href'
+    key: 'href',
+    render: (text, record) => {
+      return (<>
+        <p style={{ marginBottom: 'auto' }}>{record.alt}</p>
+        {record.href}
+      </>)
+    }
   },
   {
     title: 'src',
