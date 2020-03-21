@@ -12,6 +12,7 @@ export default {
     banner: '/banner',
     fixdl: '/fix/dl',
 
+    Img_DOMIM: 'http://img.ayioz.com',
     API_DOMIN: 'http://api.ayioz.com',
-    Img_DOMIM: 'http://img.ayioz.com'
+    Play_DOMIN: 'http://o.ayioz.com/p',
 }

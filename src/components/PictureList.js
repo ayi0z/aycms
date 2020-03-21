@@ -6,34 +6,47 @@ import styles from './PictureList.css'
 import PropTypes from 'prop-types'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import api from '@/util/api'
+import { Modal, Spin } from 'antd'
 
 const setImgSrc = node => {
     node.target.src = `${api.Img_DOMIM}/aycms-black.png`
     node.target.removeEventListener('error', setImgSrc)
 }
 const PictureList = (props) => {
-
+    const [playCode, setPlayCode] = useState(false)
     const imgRef = useCallback(node => {
         if (node) {
             node.addEventListener('error', setImgSrc)
         }
     }, [])
 
+    const objRef = useCallback(node => {
+        if (node) {
+            node.addEventListener('load', () => {
+                setLoading(false)
+            })
+        }
+    }, [])
+
     const { imgField, pictures, imgWidth, imgHeight, imgXPadding, imgYPadding, renderDec } = props
     const [picOpen, setPicOpen] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const imgBoxWidth = imgWidth + imgXPadding * 2
     const imgBoxHeight = imgHeight + imgYPadding * 2
     const tPicOpen = { ...picOpen }
 
-    const onImgClick = (e, i) => {
-        Object.keys(tPicOpen).forEach((key) => {
-            if (key !== i && tPicOpen[key]) {
-                tPicOpen[key] = false
-            }
-        })
-        tPicOpen[i] = true
-        setPicOpen(tPicOpen)
+    // const onImgClick = (e, i) => {
+    const onImgClick = (item) => {
+        setLoading(true)
+        setPlayCode(`${api.Play_DOMIN}/${item.playcode}`)
+        // Object.keys(tPicOpen).forEach((key) => {
+        //     if (key !== i && tPicOpen[key]) {
+        //         tPicOpen[key] = false
+        //     }
+        // })
+        // tPicOpen[i] = true
+        // setPicOpen(tPicOpen)
     }
 
     const onClose = (i) => {
@@ -107,7 +120,8 @@ const PictureList = (props) => {
                 >
                     <TweenOne
                         component="a"
-                        onClick={e => onImgClick(e, i)}
+                        // onClick={e => onImgClick(e, i)}
+                        onClick={e => onImgClick(item)}
                         style={{
                             left: isRight ? '' : 0,
                             right: isRight ? 0 : '',
@@ -149,6 +163,17 @@ const PictureList = (props) => {
     }
 
     return (<div className={styles.pic_list_wrapper} style={{ height: props.height }}>
+        <Modal
+            visible={playCode ? true : false}
+            footer={null}
+            width={365}
+            destroyOnClose={true}
+            onCancel={() => { setPlayCode(false) }}
+        >
+            <Spin spinning={loading}>
+                <object ref={objRef} style={{ width: 320, height: 508 }} type="text/html" data={playCode}>No Movie</object>
+            </Spin>
+        </Modal>
         <AutoSizer>
             {
                 ({ width, height }) => {
