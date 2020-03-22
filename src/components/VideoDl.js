@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react'
 import { Tabs, Modal } from 'antd';
-import { connect } from 'dva'
+import { connect } from 'umi'
 import styles from './VideoDl.css'
 import Player from '@/components/Player'
 

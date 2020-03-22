@@ -1,6 +1,6 @@
 import { CloudSyncOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, Tabs } from 'antd';
-import router from 'umi/router';
+import { history } from 'umi';
 import styles from './index.css';
 import React from 'react'
 
@@ -47,11 +47,11 @@ function BasicLayout(props) {
   }
 
   const MenuSlected = (e) => {
-    router.push(`/${e.key}`)
+    history.push(`/${e.key}`)
   }
 
   const tabPaneChange = (e) => {
-    router.push(e)
+    history.push(e)
   }
 
   return (

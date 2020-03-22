@@ -4,6 +4,7 @@ import { authClear, authSave } from '@/util/auth-storage'
 import api from '@/util/api'
 import { Component } from 'react';
 import styles from './login.css';
+import { history } from 'umi'
 
 class LoginForm extends Component {
   state = {
@@ -30,7 +31,7 @@ class LoginForm extends Component {
       if (data.code === 200) {
         authSave(data.data)
         message.success({ content: '登入成功!', duration: 2 })
-        require('umi/router').push('/')
+        history.push('/')
       } else {
         console.warn(`登陆失败[${data.code}]:${data.msg}`)
         message.warn({ content: `登陆失败[${data.code}]:${data.msg}`, duration: 3 })

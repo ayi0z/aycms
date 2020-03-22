@@ -171,7 +171,7 @@ const PictureList = (props) => {
             onCancel={() => { setPlayCode(false) }}
         >
             <Spin spinning={loading}>
-                <object ref={objRef} style={{ width: 320, height: 508 }} type="text/html" data={playCode}>No Movie</object>
+                <iframe ref={objRef} title="ifr" frameBorder="no" allowFullScreen="allowFullScreen" style={{ width: 320, height: 508 }} type="text/html" src={playCode}>No Movie</iframe>
             </Spin>
         </Modal>
         <AutoSizer>

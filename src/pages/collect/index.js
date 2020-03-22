@@ -2,7 +2,7 @@
  * tabtitle: 视频
  * icon: VideoCameraOutlined
  */
-import { connect } from 'dva'
+import { connect } from 'umi'
 import React, { PureComponent } from 'react';
 import {
   DeleteOutlined,

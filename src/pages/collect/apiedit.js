@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Input, Radio, Button, Tooltip, Form } from 'antd';
 import { formItemLayout, tailFormItemLayout } from '@/util/form-layout'
-import { connect } from 'dva'
+import { connect } from 'umi'
 
 @connect(({ collect, loading }) => ({ collect, loading: loading }))
 class ApiEdit extends Component {

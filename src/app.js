@@ -1,5 +1,6 @@
 import { authRead } from '@/util/auth-storage'
 import api from '@/util/api'
+import { history } from 'umi'
 
 export const dva = {
     config: {
@@ -21,12 +22,12 @@ export function render(oldRender) {
                 if (data.code === 200) {
                     oldRender()
                 } else {
-                    require('umi/router').push('/account/login')
+                    history.push('/account/login')
                     oldRender()
                 }
             }).catch(e => console.error(e))
     } else {
-        require('umi/router').push('/account/login')
+        history.push('/account/login')
         oldRender()
     }
 }

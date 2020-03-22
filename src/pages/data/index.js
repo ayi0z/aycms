@@ -8,8 +8,8 @@ import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import { Form, Layout, Pagination, Row, Col, Button, Input, Drawer, Spin, Select } from 'antd'
 import React, { Component } from 'react'
 import PictureList from '@/components/PictureList'
-import VideoDl from '@/components/VideoDl'
-import { connect } from 'dva'
+// import VideoDl from '@/components/VideoDl'
+import { connect } from 'umi'
 
 const { Content } = Layout
 
@@ -156,7 +156,7 @@ class VideosList extends Component {
             </Input.Group>
           </Form>
         </Drawer>
-        <Row style={{ textAlign: 'center', marginBottom: '10px' }}>
+        <Row style={{ textAlign: 'center', padding: '10px' }}>
           <Col span={22}>
             <Pagination size="small"
               pageSize={pageSize}
@@ -187,7 +187,7 @@ class VideosList extends Component {
                 <p>导演：{item.director}</p>
                 <p>演员：{item.actor}</p>
                 <p>{item.des}</p>
-                <VideoDl videoId={item.id}></VideoDl>
+                {/* <VideoDl videoId={item.id}></VideoDl> */}
               </>)
             }}
           />

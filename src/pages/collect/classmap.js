@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { connect } from 'dva'
+import { connect } from 'umi'
 import { Spin } from 'antd'
 
 const reorder = (list, startIndex, endIndex) => {

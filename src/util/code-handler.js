@@ -1,4 +1,5 @@
 import { message } from 'antd'
+import { history } from 'umi'
 
 const codeHandler = {
     500: '服务器内部错误',
@@ -13,7 +14,7 @@ const codeHandler = {
     6501: '无效参数.'
 }
 const codeCallbackHandler = {
-    401: () => { require('umi/router').push('/account/login') }
+    401: () => { history.push('/account/login') }
 }
 
 export default (code, t = 'info') => {
