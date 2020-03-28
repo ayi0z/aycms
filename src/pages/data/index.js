@@ -33,7 +33,7 @@ class VideosList extends Component {
   state = {
     drawerVisable: false,
     pageIndex: 0,
-    pageSize: 14,
+    pageSize: 21,
     searchName: '',
     searchYear: '',
     searchType: '',

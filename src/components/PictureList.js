@@ -214,7 +214,7 @@ PictureList.propTypes = {
 }
 PictureList.defaultProps = {
     imgField: 'image',
-    height: 500,
+    height: 583,
     imgWidth: 110,
     imgHeight: 76,
     imgXPadding: 5,
