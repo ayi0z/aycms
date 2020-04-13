@@ -1,27 +1,23 @@
-/**
- * tabtitle: 视频
- * icon: VideoCameraOutlined
- */
 import { connect } from 'umi'
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 import {
   DeleteOutlined,
   EditOutlined,
   LinkOutlined,
   PlusOutlined,
   UnorderedListOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 import {
   Divider, Drawer, Button,
   Table, Popconfirm, Dropdown,
   Row, Col, Modal, Tabs
-} from 'antd';
-import styles from './index.css';
-import ApiEdit from './apiedit'
-import ClassMap from './classmap'
-import DlFix from './dlfix'
-import CollectProgress from './collectprogress'
+} from 'antd'
+import ApiEdit from './page/apiedit'
+import ClassMap from './page/classmap'
+import DlFix from './page/dlfix'
+import CollectProgress from './page/collectprogress'
 import CollectDropMenu from '@/components/CollectDropMenu'
+import styles from './index.css'
 
 const drawerChildrenRender = (drawerVisible, collectId) => {
   if (drawerVisible) {

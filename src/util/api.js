@@ -13,6 +13,6 @@ export default {
     fixdl: '/fix/dl',
 
     Img_DOMIM: 'http://img.ayioz.com',
-    API_DOMIN: 'http://api.ayioz.co',
+    API_DOMIN: 'http://api.ayioz.com',
     Play_DOMIN: 'http://o.ayioz.com/p',
 }

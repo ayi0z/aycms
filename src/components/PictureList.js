@@ -7,18 +7,10 @@ import PropTypes from 'prop-types'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import api from '@/util/api'
 import { Modal, Spin } from 'antd'
+import Img from './Img'
 
-const setImgSrc = node => {
-    node.target.src = `${api.Img_DOMIM}/aycms-black.png`
-    node.target.removeEventListener('error', setImgSrc)
-}
 const PictureList = (props) => {
     const [playCode, setPlayCode] = useState(false)
-    const imgRef = useCallback(node => {
-        if (node) {
-            node.addEventListener('error', setImgSrc)
-        }
-    }, [])
 
     const objRef = useCallback(node => {
         if (node) {
@@ -130,10 +122,7 @@ const PictureList = (props) => {
                             height: imgHeight
                         }}
                     >
-                        <img ref={imgRef} src={item[imgField]}
-                            width="100%" height="100%" alt="piclist"
-                            style={{ background: `url(${api.Img_DOMIM}/aycms-gray.png) center center / 100% no-repeat` }}
-                        />
+                        <Img src={item[imgField]} />
                     </TweenOne>
                     <TweenOneGroup
                         enter={[
