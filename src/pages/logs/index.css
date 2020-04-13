@@ -1,0 +1,22 @@
+.layout{
+    height:  calc(100vh - 64px);
+    padding:  .5rem;
+    overflow-y: auto;
+}
+.log, .logerr{
+    font-size: 12px;
+    cursor: default;
+}
+.log:hover, 
+.logerr:hover{
+    font-weight: bold;
+}
+.log span{
+    padding-right: .5rem;
+    color: #0ebb44;
+}
+
+.logerr span{
+    padding-right: .5rem;
+    color: #d60909;
+}

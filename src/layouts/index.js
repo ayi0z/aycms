@@ -17,7 +17,7 @@ function BasicLayout(props) {
   return (
     <Layout style={{ backgroundColor: '#fff' }}>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <div className={styles.logo} ><CloudSyncOutlined className={styles.icon} /> AYCMS </div>
+        <div className={styles.logo} onClick={() => history.push('/')}><CloudSyncOutlined className={styles.icon} /> AYCMS </div>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -29,6 +29,7 @@ function BasicLayout(props) {
           <Menu.Item key="data">数据</Menu.Item>
           <Menu.Item key="play">播放</Menu.Item>
           <Menu.Item key="banner">广告</Menu.Item>
+          <Menu.Item key="logs">日志</Menu.Item>
         </Menu>
       </Header>
       <div style={{ marginTop: 64 }}>
