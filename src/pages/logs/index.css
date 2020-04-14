@@ -1,5 +1,6 @@
 .layout{
     height:  calc(100vh - 64px);
+    width:  calc(100vw - 200px);
     padding:  .5rem;
     overflow-y: auto;
 }

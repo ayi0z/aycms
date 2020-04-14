@@ -11,34 +11,30 @@ import api from '@/util/api'
 const { Content } = Layout
 
 const VideosList = props => {
-  const [pageIndex, setPageIndex] = useState(0)
   const pageSize = 24
-  const [search, setSearch] = useState({})
+  const [search, setSearch] = useState({ pageIndex: 0 })
   const [rowsCount, setRowsCount] = useState(0)
   const [rowList, setRowList] = useState([])
   const [playCode, setPlayCode] = useState(false)
 
   const doSearch = async () => {
-    const { searchName, searchCollect, searchType, searchYear } = search
+    const { searchName, searchCollect, searchType, searchYear, pageIndex } = search
 
     request.get(api.video_page, {
-      params: { pageIndex, pageSize, searchName, searchCollect, searchType, searchYear }
+      params: { pageIndex: pageIndex * 1 || 0, pageSize, searchName, searchCollect, searchType, searchYear }
     }).then(result => {
       const { code, data } = result
       if (code === 200) {
         setRowList(data.rows)
         setRowsCount(data.rowsCount)
-        console.log(result)
       }
     })
   }
 
-  useEffect(() => {
-    doSearch()
-  }, [pageIndex, search])
+  useEffect(() => { doSearch() }, [search])
 
   const handlePageChange = pageIndex => {
-    setPageIndex(pageIndex - 1)
+    setSearch({ ...search, pageIndex: pageIndex - 1 })
   }
 
   return (
@@ -51,7 +47,7 @@ const VideosList = props => {
             pageSize={pageSize}
             hideOnSinglePage={true}
             onChange={handlePageChange}
-            current={pageIndex + 1}
+            current={(search.pageIndex || 0) + 1}
             total={rowsCount} />
         </Col>
       </Row>
