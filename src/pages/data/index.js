@@ -121,6 +121,7 @@ const VideosList = props => {
       </Row>
       <Modal
         visible={playCode ? true : false}
+        maskClosable={false}
         footer={null}
         width={365}
         destroyOnClose={true}
