@@ -12,6 +12,7 @@ export default {
     banner: '/banner',
     fixdl: '/fix/dl',
     view: '/video/view',
+    viewcount: '/video/viewcount',
 
     Img_DOMIM: process.env.Img_DOMIM,
     API_DOMIN: process.env.API_DOMIN,

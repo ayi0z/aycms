@@ -20,18 +20,27 @@ const ViewList = props => {
                 setLoading(false)
                 const { code, data } = result
                 if (code === 200) {
-                    setDataList(dataList.concat(data.rows))
-                    setRowCount(data.rowsCount)
+                    setDataList(dataList.concat(data))
                 }
             })
     }
-
+    useEffect(() => {
+        request.get(api.viewcount)
+            .then(result => {
+                const { code, data } = result
+                if (code === 200) {
+                    setRowCount(data)
+                }
+            })
+    }, [])
     useEffect(() => { fetchData() }, [])
 
     const isRowLoaded = ({ index }) => (!!dataList[index])
 
     const handleLoadMore = ({ startIndex, stopIndex }) => {
-        fetchData(startIndex, stopIndex)
+        if(stopIndex > 0){
+            fetchData(startIndex, stopIndex || 1)
+        }   
     }
 
     return (
