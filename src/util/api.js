@@ -11,6 +11,7 @@ export default {
     videocollect: '/video/collect',
     banner: '/banner',
     fixdl: '/fix/dl',
+    view: '/video/view',
 
     Img_DOMIM: process.env.Img_DOMIM,
     API_DOMIN: process.env.API_DOMIN,

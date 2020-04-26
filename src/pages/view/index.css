@@ -1,0 +1,12 @@
+.loading {
+    height: auto;
+}
+
+.listitem{
+    display: block;
+    box-shadow: 0px 0px 5px #aac3c5;
+    width: 500px;
+    height: 100px;
+    margin: 10px auto;
+    border-radius: 5px;
+}

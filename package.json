@@ -4,6 +4,7 @@
     "start": "UMI_ENV=dev umi dev",
     "build:dev": "UMI_ENV=dev umi build",
     "build": "UMI_ENV=pro umi build",
+    "deploy": "UMI_ENV=pro umi build && scp -r ./dist/* root@47.101.10.133:/www/aycms/aycms",
     "test": "UMI_ENV=dev umi test",
     "lint": "eslint {src,mock,tests}/**/*.{js,jsx} --fix",
     "precommit": "lint-staged"

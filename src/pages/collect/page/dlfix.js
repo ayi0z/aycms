@@ -1,6 +1,6 @@
 
 import styles from './dlfix.css';
-import React from 'react'
+import React, { useState } from 'react'
 import api from "@/util/api";
 import request from '@/util/request'
 import { Form, Button, Input, notification } from 'antd'
@@ -9,12 +9,16 @@ import qs from 'qs'
 
 export default function (props) {
 
+  const [loading, setLoading] = useState(false)
+
   const doReplace = values => {
     if (!props.collectId) return
 
+    setLoading(true)
     request.put(`${api.fixdl}/${props.collectId}`, { data: qs.stringify(values) })
       .then(data => {
         if (data.code === 200) {
+          setLoading(false)
           notification.success({
             message: `检查完成`,
             description: `本次共检查了 ${data.data} 条播放链接.`,
@@ -34,7 +38,7 @@ export default function (props) {
           <Input placeholder="替换后的url" />
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">替换</Button>
+          <Button loading={loading} type="primary" htmlType="submit">替换</Button>
         </Form.Item>
       </Form>
     </div>

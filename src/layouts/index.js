@@ -28,6 +28,7 @@ function BasicLayout(props) {
           <Menu.Item key="collect">采集</Menu.Item>
           <Menu.Item key="data">数据</Menu.Item>
           <Menu.Item key="play">播放</Menu.Item>
+          <Menu.Item key="view">播放量</Menu.Item>
           <Menu.Item key="banner">广告</Menu.Item>
           <Menu.Item key="logs">日志</Menu.Item>
         </Menu>
