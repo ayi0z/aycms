@@ -74,11 +74,11 @@ const ViewList = props => {
                                     return <div key={key} style={style}>
                                         {rowVideo
                                             ? <div className={styles.listitem}>
-                                                <Badge count={index + 1} offset={[-120, 0]}>
+                                                <Badge count={index + 1} overflowCount={9999} offset={[-120, 0]}>
                                                     <Avatar shape="square" size={100} src={rowVideo.pic} />
                                                 </Badge>
                                                 <div style={{ display: 'inline-block', width: 400, height: 100, position: 'absolute' }}>
-                                                    <Badge count={rowVideo.viewer} offset={[20, 50]}>
+                                                    <Badge count={rowVideo.viewer} overflowCount={9999} offset={[20, 50]}>
                                                         <div style={{ display: 'inline-block', width: 400, height: 90 }}>
                                                             <div style={{ padding: 10 }}>{rowVideo.name}</div>
                                                             <div style={{ padding: 10 }}>
