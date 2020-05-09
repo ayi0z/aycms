@@ -6,6 +6,7 @@ export default {
     videoclass: '/videoclass',
     classmap: '/classmap',
     video: '/video',
+    video_online: '/video/online',
     video_page: '/video/page',
     videodl: '/video/dl',
     videocollect: '/video/collect',

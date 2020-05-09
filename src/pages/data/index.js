@@ -1,5 +1,5 @@
 import styles from './index.css'
-import { SettingOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { SettingOutlined, EditOutlined, PoweroffOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import { Layout, Pagination, Row, Col, Card, Modal } from 'antd'
 import React, { useState, useEffect } from 'react'
 import SearchBar from '@/components/SearchBar'
@@ -35,6 +35,15 @@ const VideosList = props => {
 
   const handlePageChange = pageIndex => {
     setSearch({ ...search, pageIndex: pageIndex - 1 })
+  }
+
+  const onDel = async (vid) => {
+    request.delete(`${api.video}/${vid}`)
+      .then(r => r && doSearch())
+  }
+
+  const onOnline = async vid => {
+    request.put(`${api.video_online}/${vid}`).then(r => r && doSearch())
   }
 
   return (
@@ -81,7 +90,13 @@ const VideosList = props => {
                   actions={[
                     <SettingOutlined key="setting" />,
                     <EditOutlined key="edit" />,
-                    <DeleteOutlined key="delete" />,
+                    <>
+                      {
+                        r.del_on
+                          ? <PlayCircleOutlined visible={r.del_on} key="online" onClick={() => onOnline(r.id)} />
+                          : <PoweroffOutlined visible={!r.del_on} key="off" onClick={() => onDel(r.id)} />
+                      }
+                    </>
                   ]}
                 >
                   <Card.Meta style={{ paddingTop: '.5rem' }}
@@ -129,7 +144,7 @@ const VideosList = props => {
       >
         <RemotePlayer playCode={playCode} />
       </Modal>
-    </Content>
+    </Content >
   )
 }
 
